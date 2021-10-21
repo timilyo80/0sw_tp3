@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://assets/img/viking2.png" type="Texture" id=2]
@@ -42,7 +42,7 @@ tracks/0/keys = {
 "values": [ 9, 10, 11, 12, 13, 14 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 resource_name = "attack"
 length = 0.4
 tracks/0/type = "value"
@@ -58,8 +58,7 @@ tracks/0/keys = {
 "values": [ 27, 28, 29, 30, 31 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "fall"
+[sub_resource type="Animation" id=5]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -74,8 +73,7 @@ tracks/0/keys = {
 "values": [ 20, 21, 22 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "jump"
+[sub_resource type="Animation" id=6]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -96,50 +94,49 @@ animation = "Idle"
 [sub_resource type="AnimationNodeAnimation" id=8]
 animation = "Run"
 
-[sub_resource type="AnimationNodeAnimation" id=13]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "attack"
 
-[sub_resource type="AnimationNodeAnimation" id=14]
+[sub_resource type="AnimationNodeAnimation" id=10]
 animation = "fall"
 
-[sub_resource type="AnimationNodeAnimation" id=15]
+[sub_resource type="AnimationNodeAnimation" id=11]
 animation = "jump"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=16]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
-switch_mode = 2
-auto_advance = true
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=18]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=19]
-switch_mode = 2
-auto_advance = true
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=20]
-auto_advance = true
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
 
-[sub_resource type="AnimationNodeStateMachine" id=11]
+[sub_resource type="AnimationNodeStateMachine" id=19]
 states/Idle/node = SubResource( 7 )
 states/Idle/position = Vector2( 308, 100 )
 states/Run/node = SubResource( 8 )
 states/Run/position = Vector2( 483, 100 )
-states/attack/node = SubResource( 13 )
+states/attack/node = SubResource( 9 )
 states/attack/position = Vector2( 395.649, 195 )
-states/fall/node = SubResource( 14 )
-states/fall/position = Vector2( 385.649, 14 )
-states/jump/node = SubResource( 15 )
-states/jump/position = Vector2( 232.649, 14 )
-transitions = [ "Idle", "Run", SubResource( 9 ), "Run", "Idle", SubResource( 10 ), "Idle", "attack", SubResource( 16 ), "attack", "Idle", SubResource( 17 ), "Idle", "jump", SubResource( 18 ), "jump", "fall", SubResource( 19 ), "fall", "Idle", SubResource( 20 ) ]
+states/fall/node = SubResource( 10 )
+states/fall/position = Vector2( 308, -26 )
+states/jump/node = SubResource( 11 )
+states/jump/position = Vector2( 94.649, 100 )
+transitions = [ "Idle", "Run", SubResource( 12 ), "Run", "Idle", SubResource( 13 ), "Idle", "attack", SubResource( 14 ), "attack", "Idle", SubResource( 15 ), "Idle", "jump", SubResource( 16 ), "fall", "Idle", SubResource( 18 ), "Idle", "fall", SubResource( 21 ), "jump", "Idle", SubResource( 22 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -305.784, 0 )
+graph_offset = Vector2( -244.153, -15.328 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=12]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=20]
 
 [node name="world" type="Node2D"]
 __meta__ = {
@@ -163,7 +160,7 @@ __meta__ = {
 texture = ExtResource( 2 )
 hframes = 9
 vframes = 6
-frame = 3
+frame = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
 position = Vector2( 2.5, 6.5 )
@@ -177,12 +174,12 @@ smoothing_enabled = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="player"]
 anims/Idle = SubResource( 2 )
 anims/Run = SubResource( 3 )
-anims/attack = SubResource( 6 )
-anims/fall = SubResource( 4 )
-anims/jump = SubResource( 5 )
+anims/attack = SubResource( 4 )
+anims/fall = SubResource( 5 )
+anims/jump = SubResource( 6 )
 
 [node name="AnimationTree" type="AnimationTree" parent="player"]
-tree_root = SubResource( 11 )
+tree_root = SubResource( 19 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 12 )
+parameters/playback = SubResource( 20 )
